@@ -33,8 +33,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
 	sambaoperatorv1alpha1 "github.com/samba-in-kubernetes/samba-operator/api/v1alpha1"
-	"github.com/samba-in-kubernetes/samba-operator/controllers"
 	"github.com/samba-in-kubernetes/samba-operator/internal/conf"
+	"github.com/samba-in-kubernetes/samba-operator/internal/controller"
 	pln "github.com/samba-in-kubernetes/samba-operator/internal/planner"
 	// +kubebuilder:scaffold:imports
 )
@@ -119,7 +119,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.SmbShareReconciler{
+	if err = (&controller.SmbShareReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("SmbShare"),
 	}).SetupWithManager(mgr); err != nil {
@@ -129,7 +129,7 @@ func main() {
 			"controller", "SmbShare")
 		os.Exit(1)
 	}
-	if err = (&controllers.SmbSecurityConfigReconciler{
+	if err = (&controller.SmbSecurityConfigReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("SmbSecurityConfig"),
 	}).SetupWithManager(mgr); err != nil {
@@ -139,7 +139,7 @@ func main() {
 			"controller", "SmbSecurityConfig")
 		os.Exit(1)
 	}
-	if err = (&controllers.SmbCommonConfigReconciler{
+	if err = (&controller.SmbCommonConfigReconciler{
 		Client: mgr.GetClient(),
 		Log:    ctrl.Log.WithName("controllers").WithName("SmbCommonConfig"),
 	}).SetupWithManager(mgr); err != nil {

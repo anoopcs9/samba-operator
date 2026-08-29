@@ -96,7 +96,7 @@ coverage.html: cover.out
 manager: generate build vet
 
 build:
-	CGO_ENABLED=0 $(GO_CMD) build -o bin/manager -ldflags "-X main.Version=$(GIT_VERSION) -X main.CommitID=$(COMMIT_ID)"  main.go
+	CGO_ENABLED=0 $(GO_CMD) build -o bin/manager -ldflags "-X main.Version=$(GIT_VERSION) -X main.CommitID=$(COMMIT_ID)"  ./cmd
 .PHONY: build
 
 build-integration-tests:
@@ -105,7 +105,7 @@ build-integration-tests:
 
 # Run against the configured Kubernetes cluster in ~/.kube/config
 run: generate vet manifests
-	$(GO_CMD) run ./main.go
+	$(GO_CMD) run ./cmd
 
 # Install CRDs into a cluster
 install: manifests kustomize

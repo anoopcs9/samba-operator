@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// Package controllers defines this operator's controllers.
-package controllers
+// Package controller defines this operator's controllers.
+package controller
 
 import (
 	"context"
