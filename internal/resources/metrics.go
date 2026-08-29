@@ -201,7 +201,7 @@ func (m *SmbShareManager) getOrCreateMetricsServiceMonitor(
 				{
 					Port:     defaultMetricsPortName,
 					Path:     defaultMetricsPath,
-					Interval: defaultMetricsScrapeInterval,
+					Interval: monitoringv1.Duration(defaultMetricsScrapeInterval),
 				},
 			},
 		},

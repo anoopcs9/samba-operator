@@ -94,6 +94,14 @@ func NewTestClient(kubeconfig string) *TestClient {
 	if err != nil {
 		panic(err)
 	}
+	// Disable client-side rate limiting for the test client. The integration
+	// tests poll the API server frequently (waiting for pods to become
+	// ready); the conservative client-go defaults (QPS=5, Burst=10) cause the
+	// client rate limiter's Wait() to exceed per-attempt context deadlines and
+	// surface as spurious "client rate limiter Wait returned an error" poll
+	// failures rather than genuine readiness timeouts.
+	tc.cfg.QPS = -1
+	tc.cfg.Burst = 0
 	tc.clientset = kubernetes.NewForConfigOrDie(tc.cfg)
 	return tc
 }

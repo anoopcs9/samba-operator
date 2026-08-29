@@ -9,6 +9,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
 	rtclient "sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
@@ -17,8 +18,8 @@ import (
 )
 
 func testingManager() *SmbShareManager {
-	scheme, err := sambaoperatorv1alpha1.SchemeBuilder.Build()
-	if err != nil {
+	scheme := runtime.NewScheme()
+	if err := sambaoperatorv1alpha1.AddToScheme(scheme); err != nil {
 		panic(err)
 	}
 	m := &SmbShareManager{

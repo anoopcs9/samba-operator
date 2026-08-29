@@ -1,5 +1,5 @@
 /*
-
+Copyright 2026.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ func (r *SmbShareReconciler) Reconcile(
 }
 
 func (r *SmbShareReconciler) setRecorder(mgr ctrl.Manager) {
-	r.recorder = mgr.GetEventRecorderFor("smbshare-controller")
+	r.recorder = mgr.GetEventRecorderFor("smbshare-controller") // nolint:staticcheck
 }
 
 // SetupWithManager sets up resource management.

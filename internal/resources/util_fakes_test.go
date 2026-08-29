@@ -7,6 +7,7 @@ import (
 
 	"k8s.io/apimachinery/pkg/api/meta"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	rtclient "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -88,6 +89,13 @@ func (*fakeClient) Patch(
 	return nil
 }
 
+func (*fakeClient) Apply(
+	_ context.Context,
+	_ runtime.ApplyConfiguration,
+	_ ...rtclient.ApplyOption) error {
+	return nil
+}
+
 func (*fakeClient) SubResource(
 	_ string) rtclient.SubResourceClient {
 	return &fakeSubResource{}
@@ -103,6 +111,16 @@ func (*fakeClient) Status() rtclient.StatusWriter {
 
 func (*fakeClient) RESTMapper() meta.RESTMapper {
 	return nil
+}
+
+func (*fakeClient) GroupVersionKindFor(
+	_ runtime.Object) (schema.GroupVersionKind, error) {
+	return schema.GroupVersionKind{}, nil
+}
+
+func (*fakeClient) IsObjectNamespaced(
+	_ runtime.Object) (bool, error) {
+	return false, nil
 }
 
 // fakeSubResource does nothing.
@@ -128,6 +146,13 @@ func (*fakeSubResource) Update(
 	_ context.Context,
 	_ rtclient.Object,
 	_ ...rtclient.SubResourceUpdateOption) error {
+	return nil
+}
+
+func (*fakeSubResource) Apply(
+	_ context.Context,
+	_ runtime.ApplyConfiguration,
+	_ ...rtclient.SubResourceApplyOption) error {
 	return nil
 }
 
